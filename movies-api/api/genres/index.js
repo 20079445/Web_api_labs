@@ -1,18 +1,18 @@
-import uniqid from 'uniqid'
 import express from 'express';
-import { movies, movieGenres, movieDetails } from './moviesData';
+import { genres } from './genresData';
+import uniqid from 'uniqid'
 
 
 const router = express.Router(); 
 
 router.get('/', (req, res) => {
-    res.json(movies);
+    res.json(genres);
 });
 
 router.get('/:id', (req, res) => {
     const id = parseInt(req.params.id);
-    if (movieDetails.id == id) {
-        res.status(200).json(movieDetails);
+    if (genres.id == id) {
+        res.status(200).json(genres);
     } else {
         res.status(404).json({
             message: 'The resource you requested could not be found.',
@@ -24,8 +24,8 @@ router.get('/:id', (req, res) => {
 router.get('/:id/genres', (req, res) => {
     const id = parseInt(req.params.id);
     // find genres in list
-    if (movieGenres.id == id) {
-        res.status(200).json(movieGenres);
+    if (genres.id == id) {
+        res.status(200).json(genres);
         
     } else {
         res.status(404).json({
@@ -38,11 +38,11 @@ router.get('/:id/genres', (req, res) => {
 router.post('/:id/genres', (req, res) => {
     const id = parseInt(req.params.id);
 
-    if (movieGenres.id == id) {
+    if (genres.id == id) {
         req.body.created_at = new Date();
         req.body.updated_at = new Date();
         req.body.id = uniqid();
-        movieGenres.results.push(req.body); //push the new genre onto the list
+        genres.results.push(req.body); //push the new genre onto the list
         res.status(201).json(req.body);
     } else {
         res.status(404).json({
